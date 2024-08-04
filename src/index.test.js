@@ -23,8 +23,3 @@ test('GET / should return Hello World!', async () => {
     expect(response.statusCode).toBe(200);
     expect(response.text).toBe('Hello World!');
 });
-
-test('adds 1 + 2 to equal 3', () => {
-    const add = require('./index').add;
-    expect(add(1, 2)).toBe(3);
-});

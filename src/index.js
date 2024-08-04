@@ -33,8 +33,4 @@ app.use(cors({
     }
 })();
 
-function add(a, b) {
-    return a + b;
-}
-
-module.exports = { app, add };
+module.exports = { app };
