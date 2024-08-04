@@ -12,6 +12,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 1234567
+          POSTGRES_DB: gather_up
+        ports:
+          - 5432:5432
+        options: --health-cmd="pg_isready -U postgres" --health-interval=10s --health-timeout=5s --health-retries=5
+
     steps:
     - name: Check out the repository
       uses: actions/checkout@v3
@@ -23,15 +34,13 @@ jobs:
 
     - name: Install dependencies
       run: npm install
-    
-    - name: List node_modules directory
-      run: ls -la node_modules/.bin
-    
-    - name: Check Jest permissions
-      run: ls -la node_modules/.bin/jest
-    
-    - name: Adjust Jest permissions
-      run: chmod +x node_modules/.bin/jest
+
+    - name: Run database migrations
+      run: npm run db:migrate
+      env:
+        DATABASE_URL: postgres://postgres:1234567@localhost:5432/gather_up
 
     - name: Run tests
       run: npm run test
+      env:
+        DATABASE_URL: postgres://postgres:1234567@localhost:5432/gather_up
