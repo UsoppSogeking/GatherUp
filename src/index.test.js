@@ -1,0 +1,30 @@
+const request = require('supertest');
+const { app } = require('./index');
+const sequelize = require('./database/config');
+
+// Redirecione logs para evitar exibição no console durante os testes
+const originalLog = console.log;
+const originalError = console.error;
+
+beforeAll(async () => {
+    console.log = jest.fn(); // Mude o log para uma função mock
+    console.error = jest.fn(); // Mude o erro para uma função mock
+    await sequelize.authenticate();
+});
+
+afterAll(async () => {
+    await sequelize.close(); // Feche a conexão com o banco de dados
+    console.log = originalLog; // Restaure o log original
+    console.error = originalError; // Restaure o erro original
+});
+
+test('GET / should return Hello World!', async () => {
+    const response = await request(app).get('/');
+    expect(response.statusCode).toBe(200);
+    expect(response.text).toBe('Hello World!');
+});
+
+test('adds 1 + 2 to equal 3', () => {
+    const add = require('./index').add;
+    expect(add(1, 2)).toBe(3);
+});
