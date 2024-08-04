@@ -30,5 +30,8 @@ jobs:
     - name: Check Jest permissions
       run: ls -la node_modules/.bin/jest
     
+    - name: Adjust Jest permissions
+      run: chmod +x node_modules/.bin/jest
+
     - name: Run tests
       run: npm run test
