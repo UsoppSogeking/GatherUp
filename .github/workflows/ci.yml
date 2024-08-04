@@ -24,21 +24,5 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Run database migrations
-      run: npm run db:migrate
-      env:
-        DATABASE_URL: postgres://postgres:1234567@localhost:5432/gather_up
-    
-    - name: List node_modules directory
-      run: ls -la node_modules/.bin
-    
-    - name: Check Jest permissions
-      run: ls -la node_modules/.bin/jest
-    
-    - name: Adjust Jest permissions
-      run: chmod +x node_modules/.bin/jest
-
     - name: Run tests
       run: npm run test
-      env: 
-        NODE_ENV: development
