@@ -24,5 +24,13 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    # - name: Run tests
-    #   run: npm run test
+    - name: Set environment variables
+      run: |
+        echo "DB_HOST=${{ secrets.DB_HOST }}" >> $GITHUB_ENV
+        echo "DB_PORT=${{ secrets.DB_PORT }}" >> $GITHUB_ENV
+        echo "DB_NAME=${{ secrets.DB_NAME }}" >> $GITHUB_ENV
+        echo "DB_USER=${{ secrets.DB_USER }}" >> $GITHUB_ENV
+        echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
+
+    - name: Run tests
+      run: npm run test
