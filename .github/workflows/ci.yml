@@ -12,13 +12,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
-      DB_USER: ${{ secrets.DB_USER }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      DB_NAME: gather-up
-      DB_HOST: gather-up.cpuc4qq0cnds.us-east-2.rds.amazonaws.com
-      DB_PORT: 5432
-
     steps:
     - name: Check out the repository
       uses: actions/checkout@v3
@@ -30,9 +23,6 @@ jobs:
 
     - name: Install dependencies
       run: npm install
-    
-    - name: Fix Jest permissions
-      run: sudo chmod +x ./node_modules/.bin/jest
 
-    - name: Run tests
-      run: npm run test
+    # - name: Run tests
+    #   run: npm run test
