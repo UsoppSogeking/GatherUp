@@ -7,18 +7,22 @@ require('dotenv').config();
 let testUserId;
 let testUserEmail;
 const testUserPassword = 'password123';
+let server;
+const PORT = 3001;
 
 beforeAll(async () => {
+    server = app.listen(PORT);
     await sequelize.authenticate();
-});
+}, 15000);
 
 afterAll(async () => {
     if (testUserId) {
         await User.destroy({ where: { id: testUserId } });
     }
 
+    await new Promise(resolve => server.close(resolve));
     await sequelize.close();
-});
+}, 15000);
 
 describe('POST /auth/register', () => {
     it('should register a new user', async () => {
@@ -43,7 +47,7 @@ describe('POST /auth/register', () => {
         testUserId = user.id;
         testUserEmail = user.email;
     });
-});
+}, 15000);
 
 describe('POST /auth/login', () => {
     it('should login a user', async () => {
@@ -61,7 +65,7 @@ describe('POST /auth/login', () => {
         expect(response.body).toHaveProperty('token');
         expect(typeof response.body.token).toBe('string');
     });
-});
+}, 15000);
 
 describe('DELETE /auth/delete', () => {
     it('must delete a user', async () => {
@@ -72,5 +76,5 @@ describe('DELETE /auth/delete', () => {
 
         expect(response.status).toBe(200);
     });
-});
+}, 15000);
 
