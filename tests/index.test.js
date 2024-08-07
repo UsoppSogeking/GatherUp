@@ -7,8 +7,11 @@ require('dotenv').config();
 let testUserId;
 let testUserEmail;
 const testUserPassword = 'password123';
+let server;
+const PORT = 3001;
 
 beforeAll(async () => {
+    server = app.listen(PORT);
     await sequelize.authenticate();
 }, 15000);
 
@@ -17,6 +20,7 @@ afterAll(async () => {
         await User.destroy({ where: { id: testUserId } });
     }
 
+    await new Promise(resolve => server.close(resolve));
     await sequelize.close();
 }, 15000);
 
