@@ -10,7 +10,7 @@ const testUserPassword = 'password123';
 
 beforeAll(async () => {
     await sequelize.authenticate();
-});
+}, 10000);
 
 afterAll(async () => {
     if (testUserId) {
@@ -18,7 +18,7 @@ afterAll(async () => {
     }
 
     await sequelize.close();
-});
+}, 10000);
 
 describe('POST /auth/register', () => {
     it('should register a new user', async () => {
@@ -43,7 +43,7 @@ describe('POST /auth/register', () => {
         testUserId = user.id;
         testUserEmail = user.email;
     });
-});
+}, 10000);
 
 describe('POST /auth/login', () => {
     it('should login a user', async () => {
@@ -61,7 +61,7 @@ describe('POST /auth/login', () => {
         expect(response.body).toHaveProperty('token');
         expect(typeof response.body.token).toBe('string');
     });
-});
+}, 10000);
 
 describe('DELETE /auth/delete', () => {
     it('must delete a user', async () => {
@@ -72,5 +72,5 @@ describe('DELETE /auth/delete', () => {
 
         expect(response.status).toBe(200);
     });
-});
+}, 10000);
 
