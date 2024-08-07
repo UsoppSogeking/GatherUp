@@ -1,23 +1,41 @@
 {
   "development": {
     "username": "postgres",
-    "password": "1234567",
-    "database": "gather_up",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+    "password": "yg0iE9iNWsNbI4MyfcVS",
+    "database": "postgres",
+    "host": "gatherup.cpuc4qq0cnds.us-east-2.rds.amazonaws.com",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
   },
   "test": {
     "username": "postgres",
-    "password": "1234567",
-    "database": "gather_up",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+    "password": "yg0iE9iNWsNbI4MyfcVS",
+    "database": "postgres",
+    "host": "gatherup.cpuc4qq0cnds.us-east-2.rds.amazonaws.com",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
   },
   "production": {
     "username": "postgres",
-    "password": "1234567",
-    "database": "gather_up",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+    "password": "yg0iE9iNWsNbI4MyfcVS",
+    "database": "postgres",
+    "host": "gatherup.cpuc4qq0cnds.us-east-2.rds.amazonaws.com",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
   }
 }
