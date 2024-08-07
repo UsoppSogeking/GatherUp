@@ -24,6 +24,9 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: Ensure jest has execute permissions
+      run: chmod +x node_modules/.bin/jest
+
     - name: Set up environment variables
       run: |
         echo "DATABASE=${{ secrets.DATABASE }}" >> $GITHUB_ENV
@@ -33,9 +36,6 @@ jobs:
         echo "DB_PORT=${{ secrets.DB_PORT }}" >> $GITHUB_ENV
         echo "NODE_ENV=${{ secrets.NODE_ENV }}" >> $GITHUB_ENV
         echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
-
-    - name: Set up environment variables
-      run: echo "DATABASE_URL=$DATABASE_URL" >> $GITHUB_ENV
     
     - name: Run tests
       run: npm run test
