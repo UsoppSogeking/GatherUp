@@ -61,11 +61,106 @@ describe('POST /auth/login', () => {
             .send(logingUser);
 
         expect(response.status).toBe(200);
-        
+
         expect(response.body).toHaveProperty('token');
         expect(typeof response.body.token).toBe('string');
     });
 }, 15000);
+
+describe('GET /users', () => {
+    it('should get all users', async () => {
+        const response = await request(app)
+            .get('/users');
+
+        expect(response.status).toBe(200);
+    });
+});
+
+describe('GET /users/:userId', () => {
+    it('should get an user by id', async () => {
+        expect(testUserId).toBeDefined();
+
+        const response = await request(app)
+            .get(`/users/${testUserId}`);
+
+        expect(response.status).toBe(200);
+    });
+});
+
+describe('PUT /users/:userId', () => {
+    it('it should update the user name', async () => {
+        expect(testUserId).toBeDefined();
+
+        const updatedData = {
+            name: 'Jane Doe'
+        };
+
+        const response = await request(app)
+            .put(`/users/${testUserId}`)
+            .send(updatedData);
+
+        expect(response.status).toBe(200);
+
+        const user = await User.findOne({ where: { id: testUserId } });
+        expect(user.name).toBe(updatedData.name);
+    });
+});
+
+describe('PUT /user/:userId', () => {
+    it('should update the profile picture', async () => {
+        expect(testUserId).toBeDefined();
+
+        const updatedData = {
+            profile_picture: 'http://example.com/janedoe.jpg'
+        }
+
+        const response = await request(app)
+            .put(`/users/${testUserId}`)
+            .send(updatedData);
+
+        expect(response.status).toBe(200);
+
+        const user = await User.findOne({ where: { id: testUserId } });
+        expect(user.profile_picture).toBe(updatedData.profile_picture);
+    });
+});
+
+describe('PUT /users/:userId', () => {
+    it('should update the user name and profile picture', async () => {
+        expect(testUserId).toBeDefined();
+
+        const updatedData = {
+            name: 'Jane Does',
+            profile_picture: 'http://example.com/janedoe_updated.jpg'
+        }
+
+        const response = await request(app)
+            .put(`/users/${testUserId}`)
+            .send(updatedData);
+
+        expect(response.status).toBe(200);
+
+        const user = await User.findOne({ where: { id: testUserId } });
+        expect(user.name).toBe(updatedData.name);
+        expect(user.profile_picture).toBe(updatedData.profile_picture);
+    });
+});
+
+describe('PUT /users/:uderId', () => {
+    it('should not update the user when no fields are provided', async () => {
+        expect(testUserId).toBeDefined();
+
+        const response = await request(app)
+            .put(`/users/${testUserId}`)
+            .send({});
+
+        expect(response.status).toBe(200);
+
+        const user = await User.findOne({ where: { id: testUserId } });
+        expect(user.name).toBe('Jane Does');
+        expect(user.profile_picture).toBe('http://example.com/janedoe_updated.jpg');
+    });
+});
 
 describe('DELETE /auth/delete', () => {
     it('must delete a user', async () => {
