@@ -1,7 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const sequelize = require('./database/config');
+
 const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 app.use(express.json());
@@ -20,6 +22,7 @@ try {
 }
 
 app.use("/", authRoutes);
+app.use("/", userRoutes);
 
 const port = process.env.PORT || 3000;
 if (process.env.NODE_ENV !== 'test') {
